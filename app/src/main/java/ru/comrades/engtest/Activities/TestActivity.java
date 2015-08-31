@@ -58,7 +58,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(counterQuestions!=1) {
                     counterQuestions--;
-                 //   Log.d("my_app", counterQuestions + " : " + userAnswers.get(counterQuestions));
+
                     changeQuestion();
 
                 }
@@ -68,12 +68,12 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
        //         Toast.makeText(getApplicationContext(), Integer.toString(DBHelper.getSize()), Toast.LENGTH_SHORT).show();
-                if(counterQuestions!=25) {
-                    userAnswers.add(counterQuestions - 1, null);
+            //    if(counterQuestions!=25) {
+           //         userAnswers.add(counterQuestions - 1, null);
                    // Log.d("my_app", counterQuestions + " : " + userAnswers.get(counterQuestions - 1));
                     counterQuestions++;
                     changeQuestion();
-                }
+            //    }
             }
         });
         button_next.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(counterQuestions!=25) {
-                  //  Log.d("my_app", counterQuestions + " : " + userAnswers.get(counterQuestions - 1));
+
                     counterQuestions++;
                     changeQuestion();
                 }
@@ -92,25 +92,27 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void changeQuestion() {
+
         try {
-
-
             textView_question.setText(DBHelper.getQuestion(counterQuestions));
             radioGroup.removeAllViews();
             for(int i=0; i<DBHelper.getVariantsOfTheAnswer(counterQuestions).size(); i++) {
                 final RadioButton radioButton = new RadioButton(getApplicationContext());
                 radioButton.setText(DBHelper.getVariantsOfTheAnswer(counterQuestions).get(i));
                 radioButton.setId(i);
-                if (!checkFirstClick && userAnswers.get(counterQuestions-1).equals(i)) {
-                    radioButton.setChecked(true);
+
+                if(DBHelper.getUserAnswerBoolean(counterQuestions)) {
+                    if (i==DBHelper.getUserAnswer(counterQuestions))radioButton.setChecked(true); ;
                 }
 
                 radioButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        checkFirstClick = false;
-                        userAnswers.add(counterQuestions - 1, radioButton.getId());
-                       // Log.d("my_app", counterQuestions + " : " + userAnswers.get(counterQuestions - 1));
+                        //    userAnswers.add(counterQuestions - 1, radioButton.getId());
+
+                        DBHelper.addUserAnswer(counterQuestions, radioButton.getId());
+
+                        Log.d("my_app", "counterQuestions=" +counterQuestions + " : "  + DBHelper.getUserAnswer(counterQuestions));
                     }
                 });
                 radioGroup.addView(radioButton);
