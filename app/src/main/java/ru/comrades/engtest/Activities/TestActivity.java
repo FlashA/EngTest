@@ -27,18 +27,12 @@ public class TestActivity extends AppCompatActivity {
 
     private DBDataHelper DBHelper;
 
-    private boolean checkFirstClick = true;
-
     private int counterQuestions = 1;
-
-    private ArrayList<Integer> userAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
-        userAnswers = new ArrayList<Integer>();
 
         DBHelper = new DBDataHelper(this);
 
@@ -46,19 +40,24 @@ public class TestActivity extends AppCompatActivity {
         button_skip = (Button) findViewById(R.id.button_skip);
         button_next = (Button) findViewById(R.id.button_next);
 
+        button_previous.setVisibility(View.INVISIBLE);
+
         textView_question = (TextView) findViewById(R.id.textView_question);
 
         radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
 
-        changeQuestion();
+        Log.d("my_app", "onCreate");
 
         button_previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(counterQuestions==25) button_next.setText("Следующий вопрос");
                 if(counterQuestions!=1) {
                     counterQuestions--;
-
                     changeQuestion();
+
+                    if (counterQuestions==1) button_previous.setVisibility(View.INVISIBLE);
 
                 }
             }
@@ -66,10 +65,6 @@ public class TestActivity extends AppCompatActivity {
         button_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-       //         Toast.makeText(getApplicationContext(), Integer.toString(DBHelper.getSize()), Toast.LENGTH_SHORT).show();
-            //    if(counterQuestions!=25) {
-           //         userAnswers.add(counterQuestions - 1, null);
-                   // Log.d("my_app", counterQuestions + " : " + userAnswers.get(counterQuestions - 1));
                     counterQuestions++;
                     changeQuestion();
             //    }
@@ -79,11 +74,17 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(counterQuestions==24) button_next.setText("Завершить тест");
+
                 if(counterQuestions!=25) {
 
                     counterQuestions++;
                     changeQuestion();
+
+
                 }
+
+                if (counterQuestions>=2) button_previous.setVisibility(View.VISIBLE);
             }
         });
 
@@ -93,7 +94,7 @@ public class TestActivity extends AppCompatActivity {
     private void changeQuestion() {
 
         try {
-            textView_question.setText(DBHelper.getQuestion(counterQuestions));
+            textView_question.setText(counterQuestions + ". " +DBHelper.getQuestion(counterQuestions));
             radioGroup.removeAllViews();
             for(int i=0; i<DBHelper.getVariantsOfTheAnswer(counterQuestions).size(); i++) {
                 final RadioButton radioButton = new RadioButton(getApplicationContext());
@@ -109,7 +110,6 @@ public class TestActivity extends AppCompatActivity {
                 radioButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //    userAnswers.add(counterQuestions - 1, radioButton.getId());
 
                         DBHelper.addUserAnswer(counterQuestions, radioButton.getId());
 
@@ -121,5 +121,26 @@ public class TestActivity extends AppCompatActivity {
         } catch (CursorIndexOutOfBoundsException e) {
             Log.d("my_app", e.toString());
         }
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        counterQuestions = savedInstanceState.getInt("counterQuestions");;
+        Log.d("my_app", "onRestoreInstanceState");
+    }
+
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("counterQuestions", counterQuestions);
+        Log.d("my_app", "onSaveInstanceState");
+    }
+
+    protected void onResume() {
+        super.onResume();
+        changeQuestion();
+        if(counterQuestions>1) button_previous.setVisibility(View.VISIBLE);
+        if(counterQuestions==25) button_next.setText("Завершить тест");
+        Log.d("my_app", "onResume");
     }
 }
