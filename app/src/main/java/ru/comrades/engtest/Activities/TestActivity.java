@@ -19,7 +19,6 @@ import ru.comrades.engtest.R;
 public class TestActivity extends AppCompatActivity {
 
     private Button button_previous;
-    private Button button_skip;
     private Button button_next;
 
     private TextView textView_question;
@@ -38,7 +37,6 @@ public class TestActivity extends AppCompatActivity {
         DBHelper = new DBDataHelper(this);
 
         button_previous = (Button) findViewById(R.id.button_previous);
-        button_skip = (Button) findViewById(R.id.button_skip);
         button_next = (Button) findViewById(R.id.button_next);
 
         button_previous.setVisibility(View.INVISIBLE);
@@ -58,13 +56,6 @@ public class TestActivity extends AppCompatActivity {
                     changeQuestion();
                     if (counterQuestions == 1) button_previous.setVisibility(View.INVISIBLE);
                 }
-            }
-        });
-        button_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    counterQuestions++;
-                    changeQuestion();
             }
         });
         button_next.setOnClickListener(new View.OnClickListener() {

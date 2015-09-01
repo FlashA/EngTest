@@ -17,8 +17,6 @@ public class AnswersActivity extends AppCompatActivity {
 
     private ListAdapter mAdapter;
 
-    private ArrayList<String> list;
-
     private DBDataHelper DBHelper;
 
     @Override
@@ -27,8 +25,6 @@ public class AnswersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_answers);
 
         DBHelper = new DBDataHelper(this);
-
-        list = new ArrayList<String>(DBHelper.getListOfUserAnswer());
 
         final ListView g = (ListView) findViewById(R.id.listView);
         mAdapter = new ListAdapter(getApplicationContext(), DBHelper.getListOfUserAnswer());
