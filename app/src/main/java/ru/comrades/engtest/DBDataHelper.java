@@ -133,14 +133,23 @@ public class DBDataHelper {
 		}
 			cursor.close();
 	}
-	public void setPrio(int id_desc, int id_answer) {
-
-	//	database.execSQL("insert into temp set id_answer = " + id_answer + " where id_desc = " + id_desc +"on dublicate key update id_answer =  " + id);
-	}
 
 	public void clearTableTemp(){
 		database.execSQL("DELETE FROM " + TABLE_NAME);
 	}
 
+	public ArrayList<String> getListOfUserAnswer() {
+
+		ArrayList<String> list = new ArrayList<String>();
+		String query = "SELECT id_desc, id_answer FROM temp ORDER BY id_desc";
+		Cursor cursor = database.rawQuery(query, null);
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(cursor.getString(0) + ". " + cursor.getString(1));
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		return list;
+	}
 
 }

@@ -1,5 +1,6 @@
 package ru.comrades.engtest.Activities;
 
+import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,11 +52,11 @@ public class TestActivity extends AppCompatActivity {
         button_previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(counterQuestions==25) button_next.setText("Следующий вопрос");
-                if(counterQuestions!=1) {
+                if (counterQuestions == 25) button_next.setText("Следующий вопрос");
+                if (counterQuestions != 1) {
                     counterQuestions--;
                     changeQuestion();
-                    if (counterQuestions==1) button_previous.setVisibility(View.INVISIBLE);
+                    if (counterQuestions == 1) button_previous.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -73,6 +74,10 @@ public class TestActivity extends AppCompatActivity {
                 if(counterQuestions!=25) {
                     counterQuestions++;
                     changeQuestion();
+                }
+                if(counterQuestions==25) {
+                    Intent intent = new Intent(TestActivity.this, AnswersActivity.class);
+                    startActivity(intent);
                 }
                 if (counterQuestions>=2) button_previous.setVisibility(View.VISIBLE);
             }
@@ -111,7 +116,6 @@ public class TestActivity extends AppCompatActivity {
         counterQuestions = savedInstanceState.getInt("counterQuestions");;
         Log.d("my_app", "onRestoreInstanceState");
     }
-
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
