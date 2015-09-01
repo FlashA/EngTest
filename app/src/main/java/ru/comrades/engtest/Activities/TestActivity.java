@@ -67,7 +67,7 @@ public class TestActivity extends AppCompatActivity {
                     changeQuestion();
                 }
                 if(counterQuestions==25) {
-                    Intent intent = new Intent(TestActivity.this, AnswersActivity.class);
+                    Intent intent = new Intent(TestActivity.this, ResultActivity.class);
                     startActivity(intent);
                 }
                 if (counterQuestions>=2) button_previous.setVisibility(View.VISIBLE);

@@ -32,7 +32,7 @@ public class ResultActivity extends AppCompatActivity {
         button_restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ResultActivity.this, AnswersActivity.class);
+                Intent intent = new Intent(ResultActivity.this, LogoActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
