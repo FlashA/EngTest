@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -101,8 +100,10 @@ public class TestActivity extends AppCompatActivity {
                 radioButton.setText(DBHelper.getVariantsOfTheAnswer(counterQuestions).get(i));
                 radioButton.setId(i);
 
-                if(DBHelper.getUserAnswerBoolean(counterQuestions)) {
-                    if (i==DBHelper.getUserAnswer(counterQuestions))radioButton.setChecked(true); ;
+                if(DBHelper.getSizeTempTable()!= 0 && DBHelper.getUserAnswerBoolean(counterQuestions)) {
+                    if (i==DBHelper.getUserAnswer(counterQuestions)){
+                        radioButton.setChecked(true);
+                    }
                 }
 
                 radioButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +113,7 @@ public class TestActivity extends AppCompatActivity {
 
                         DBHelper.addUserAnswer(counterQuestions, radioButton.getId());
 
-                        Log.d("my_app", "counterQuestions=" +counterQuestions + " : "  + DBHelper.getUserAnswer(counterQuestions));
+                        Log.d("my_app", "counterQuestions=" + counterQuestions + " : " + DBHelper.getUserAnswer(counterQuestions));
                     }
                 });
                 radioGroup.addView(radioButton);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DBDataHelper {
 	
-	private static final String DB_NAME = "eng_bank.sqlite";
+	private static final String DB_NAME = "bank.sqlite";
 	
 	private SQLiteDatabase database;
 	private Context context;
@@ -42,9 +42,18 @@ public class DBDataHelper {
 	}
 
 	public int getSize() {
-
 		int question = 0;
 		String query = "SELECT COUNT(*) FROM questions";
+		Cursor cursor = database.rawQuery(query, null);
+		cursor.moveToFirst();
+		question = cursor.getInt(0);
+		cursor.close();
+		return question;
+	}
+
+	public int getSizeTempTable() {
+		int question = 0;
+		String query = "SELECT COUNT(*) FROM temp";
 		Cursor cursor = database.rawQuery(query, null);
 		cursor.moveToFirst();
 		question = cursor.getInt(0);
@@ -127,6 +136,10 @@ public class DBDataHelper {
 	public void setPrio(int id_desc, int id_answer) {
 
 	//	database.execSQL("insert into temp set id_answer = " + id_answer + " where id_desc = " + id_desc +"on dublicate key update id_answer =  " + id);
+	}
+
+	public void clearTableTemp(){
+		database.execSQL("DELETE FROM " + TABLE_NAME);
 	}
 
 
