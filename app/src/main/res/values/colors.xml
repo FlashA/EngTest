@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_background">#FFF4F0F1</color>
+    <color name="radio_button">#e75748</color>
+    <color name="apptheme_color">#e75748</color>
+
 </resources>
+

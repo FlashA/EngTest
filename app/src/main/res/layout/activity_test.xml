@@ -40,8 +40,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="75dp"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="20dp"
-        android:theme="@android:style/TextAppearance.Material.Widget">
+        android:layout_marginTop="20dp">
 
     </RadioGroup>
 

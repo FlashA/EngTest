@@ -1,12 +1,15 @@
 package ru.comrades.engtest.Activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.CursorIndexOutOfBoundsException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -45,6 +48,7 @@ public class TestActivity extends AppCompatActivity {
 
         radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
 
+
         Log.d("my_app", "onCreate");
 
         button_previous.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +81,14 @@ public class TestActivity extends AppCompatActivity {
 
     private void changeQuestion() {
         try {
+            textView_question.setTextColor(Color.DKGRAY);
             textView_question.setText(counterQuestions + ". " +DBHelper.getQuestion(counterQuestions));
             radioGroup.removeAllViews();
             for(int i=0; i<DBHelper.getVariantsOfTheAnswer(counterQuestions).size(); i++) {
                 final RadioButton radioButton = new RadioButton(getApplicationContext());
+
+                radioButton.setTextColor(Color.DKGRAY);
+                radioButton.setButtonDrawable(R.drawable.rb_item);
                 radioButton.setText(DBHelper.getVariantsOfTheAnswer(counterQuestions).get(i));
                 radioButton.setId(i);
                 if(DBHelper.getSizeTempTable()!= 0 && DBHelper.getUserAnswerBoolean(counterQuestions)) {
