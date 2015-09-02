@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,12 +18,15 @@ public class ListAdapter extends BaseAdapter  {
     private ArrayList<String> list;
     private LayoutInflater lInflater;
 
+    private DBDataHelper DBHelper;
+
     public ListAdapter(Context context, ArrayList<String> list) {
         super();
         this.list = list;
         this.mContext = context;
         lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        DBHelper = new DBDataHelper(mContext);
     }
 
     @Override
@@ -50,6 +50,7 @@ public class ListAdapter extends BaseAdapter  {
         if (view == null) {
             view = lInflater.inflate(R.layout.list_item, parent, false);
         }
+
 
         ((TextView) view.findViewById(R.id.textView)).setText(list.get(position).toString());
 
