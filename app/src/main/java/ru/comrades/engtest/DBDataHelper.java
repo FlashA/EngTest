@@ -141,14 +141,12 @@ public class DBDataHelper {
 	public ArrayList<String> getListOfUserAnswer() {
 
 		ArrayList<String> list = new ArrayList<String>();
-		//String query = "SELECT id_desc, id_answer FROM temp ORDER BY id_desc";
-		String query = "SELECT desc_quest FROM questions WHERE id_quest = " +
-				"(SELECT id_desc FROM temp)";
+		String query = "SELECT id_desc, id_answer FROM temp ORDER BY id_desc";
+		//String query = "SELECT desc_quest FROM questions WHERE id_quest = (SELECT id_desc FROM temp)";
 		Cursor cursor = database.rawQuery(query, null);
 		if (cursor.moveToFirst()) {
 			do {
-				//list.add(cursor.getString(0) + ". " + cursor.getString(1));
-				list.add(cursor.getString(0));
+				list.add("№ вопроса: " + cursor.getString(0) + " Ответ: " + cursor.getInt(1));
 			} while (cursor.moveToNext());
 		}
 		cursor.close();
