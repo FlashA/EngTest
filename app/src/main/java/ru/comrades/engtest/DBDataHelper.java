@@ -144,7 +144,7 @@ public class DBDataHelper {
 
 		ArrayList<ListItem> list = new ArrayList<ListItem>();
 
-		String query2 = "SELECT id_desc, id_answer FROM temp";
+		String query2 = "SELECT id_desc, id_answer FROM temp ORDER BY id_desc";
 
 		//String query = "SELECT desc_quest FROM questions WHERE id_quest = (SELECT id_desc FROM temp)";
 		Cursor cursor2 = database.rawQuery(query2, null);
@@ -158,7 +158,7 @@ public class DBDataHelper {
 				item.setAnswer(Integer.toString(cursor2.getInt(1)));
 
 				//Log.d("my_app", Integer.toString(cursor2.getInt(0)));
-				String query1 = "SELECT answer FROM answers WHERE id_desc =" + cursor2.getString(0) +  " ORDER BY id_desc";
+				String query1 = "SELECT answer FROM answers WHERE id_desc =" + cursor2.getString(0);
 				cursor1 = database.rawQuery(query1, null);
 				cursor1.moveToFirst();
 
