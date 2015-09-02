@@ -11,4 +11,14 @@
         android:state_checked="true" />
     <item
         android:drawable="@drawable/apptheme_btn_radio_off_holo_light" />
+
+    <item
+        android:drawable="@drawable/apptheme_btn_radio_off_focused_holo_light"
+        android:state_focused="true"/>
+    <item
+        android:drawable="@drawable/apptheme_btn_radio_on_focused_holo_light"
+        android:state_focused="true"
+        android:state_checked="true"/>
+
+
 </selector>
