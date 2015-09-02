@@ -26,6 +26,7 @@ public class LogoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DBHelper = new DBDataHelper(getApplicationContext());
                 DBHelper.clearTableTemp();
+                finish();
                 Intent intent = new Intent(LogoActivity.this, TestActivity.class);
                 startActivity(intent);
             }

@@ -66,14 +66,16 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(counterQuestions==24) button_next.setText("Завершить тест");
+                if(counterQuestions==25) {
+                    Intent intent = new Intent(TestActivity.this, ResultActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
                 if(counterQuestions!=25) {
                     counterQuestions++;
                     changeQuestion();
                 }
-                if(counterQuestions==25) {
-                    Intent intent = new Intent(TestActivity.this, ResultActivity.class);
-                    startActivity(intent);
-                }
+
                 if (counterQuestions>=2) button_previous.setVisibility(View.VISIBLE);
             }
         });
@@ -84,22 +86,24 @@ public class TestActivity extends AppCompatActivity {
             textView_question.setTextColor(Color.DKGRAY);
             textView_question.setText(counterQuestions + ". " +DBHelper.getQuestion(counterQuestions));
             radioGroup.removeAllViews();
+            radioGroup.clearCheck();
             for(int i=0; i<DBHelper.getVariantsOfTheAnswer(counterQuestions).size(); i++) {
                 final RadioButton radioButton = new RadioButton(getApplicationContext());
 
                 radioButton.setTextColor(Color.DKGRAY);
                 radioButton.setButtonDrawable(R.drawable.rb_item);
+                radioButton.setTextSize(20);
                 radioButton.setText(DBHelper.getVariantsOfTheAnswer(counterQuestions).get(i));
                 radioButton.setId(i);
                 if(DBHelper.getSizeTempTable()!= 0 && DBHelper.getUserAnswerBoolean(counterQuestions)) {
-                    if (i==DBHelper.getUserAnswer(counterQuestions)){
+                    if (i==DBHelper.getUserAnswer(counterQuestions)-1){
                         radioButton.setChecked(true);
                     }
                 }
                 radioButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        DBHelper.addUserAnswer(counterQuestions, radioButton.getId());
+                        DBHelper.addUserAnswer(counterQuestions, radioButton.getId()+1);
                         Log.d("my_app", "counterQuestions=" + counterQuestions + " : " + DBHelper.getUserAnswer(counterQuestions));
                     }
                 });

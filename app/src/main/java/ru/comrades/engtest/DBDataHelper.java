@@ -2,8 +2,10 @@ package ru.comrades.engtest;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -138,19 +140,46 @@ public class DBDataHelper {
 		database.execSQL("DELETE FROM " + TABLE_NAME);
 	}
 
-	public ArrayList<String> getListOfUserAnswer() {
+	public ArrayList<ListItem> getListOfUserAnswer() {
 
-		ArrayList<String> list = new ArrayList<String>();
-		String query = "SELECT id_desc, id_answer FROM temp ORDER BY id_desc";
+		ArrayList<ListItem> list = new ArrayList<ListItem>();
+
+		String query2 = "SELECT id_desc, id_answer FROM temp";
+
 		//String query = "SELECT desc_quest FROM questions WHERE id_quest = (SELECT id_desc FROM temp)";
-		Cursor cursor = database.rawQuery(query, null);
-		if (cursor.moveToFirst()) {
+		Cursor cursor2 = database.rawQuery(query2, null);
+
+		Cursor cursor1 = null;
+		ListItem item;
+		if (cursor2.moveToFirst()) {
 			do {
-				list.add("№ вопроса: " + cursor.getString(0) + " Ответ: " + cursor.getInt(1));
-			} while (cursor.moveToNext());
+				item = new ListItem();
+				item.setQuestion(Integer.toString(cursor2.getInt(0)));
+				item.setAnswer(Integer.toString(cursor2.getInt(1)));
+
+				//Log.d("my_app", Integer.toString(cursor2.getInt(0)));
+				String query1 = "SELECT answer FROM answers WHERE id_desc =" + cursor2.getString(0) +  " ORDER BY id_desc";
+				cursor1 = database.rawQuery(query1, null);
+				cursor1.moveToFirst();
+
+				Log.d("my_app", item.getAnswer() + " : "+cursor1.getString(0)) ;
+				if (item.getAnswer().equals(cursor1.getString(0))) {
+					item.setRightAnswer(true);
+				} else {
+					item.setRightAnswer(false);
+				}
+
+				Log.d("my_app", Boolean.toString(item.isRightAnswer()));
+				list.add(item);
+
+				cursor1.close();
+			} while (cursor2.moveToNext());
 		}
-		cursor.close();
+		cursor2.close();
+
 		return list;
 	}
+
+
 
 }

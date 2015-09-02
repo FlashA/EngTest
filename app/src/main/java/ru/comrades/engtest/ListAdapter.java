@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter  {
 
     private Context mContext;
-    private ArrayList<String> list;
+    private ArrayList<ListItem> list;
     private LayoutInflater lInflater;
 
     private DBDataHelper DBHelper;
 
-    public ListAdapter(Context context, ArrayList<String> list) {
+    public ListAdapter(Context context, ArrayList<ListItem> list) {
         super();
         this.list = list;
         this.mContext = context;
@@ -52,10 +53,15 @@ public class ListAdapter extends BaseAdapter  {
         }
 
 
-        ((TextView) view.findViewById(R.id.textView)).setText(list.get(position).toString());
+        ((TextView) view.findViewById(R.id.textView)).setText("№ вопроса: " + list.get(position).getQuestion() + " Ответ: " + list.get(position).getAnswer());
 
 
-        //((ImageView) view.findViewById(R.id.imageView)).setImageResource(p.image);
+        if (!list.get(position).isRightAnswer()) {
+            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(R.drawable.error);
+        } else {
+            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(R.drawable.complete);
+        }
+
 
 
         return view;

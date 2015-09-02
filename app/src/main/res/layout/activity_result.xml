@@ -12,10 +12,15 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Поздравляем, Вы успешно завершили тест! Пожалуйста, пройдите к консультанту."
+        android:textAlignment="center"
         android:id="@+id/textView2"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="289dp" />
+        android:layout_marginTop="289dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:gravity="center" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,14 +35,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Результат:"
-            android:id="@+id/textView" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=""
-        android:id="@+id/textView3" />
+            android:id="@+id/textView_result"
+            android:layout_margin="30dp"
+            android:textSize="35sp"/>
 
     </LinearLayout>
 
@@ -60,6 +60,10 @@
         android:id="@+id/button_restart"
         android:stateListAnimator="@null"
         android:background="@android:color/transparent"
-        android:textColor="@color/abc_secondary_text_material_light" />
+        android:textColor="@color/abc_secondary_text_material_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp" />
 
 </RelativeLayout>
